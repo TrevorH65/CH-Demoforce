@@ -1,15 +1,16 @@
-import { test, expect } from '@playwright/test'; // Correct import
+import { test, expect } from '@playwright/test';
 
-test('login should fail with incorrect credentials', async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/v1/');
-  
-    await page.fill('#user-name', 'invalid_user');
-    await page.fill('#password', 'wrong_pass');
-  
-    await page.click('#login-button');
-  
-    // Expect an error message
-    const error = page.locator('[data-test="error"]');
-    await expect(error).toBeVisible();
-    await expect(error).toContainText('Username and password do not match');
-  });
+test('Login via home page admin button with valid and invalid credentials', async ({ page }) => {
+  // Go to home page
+  await page.goto('https://automationintesting.online/');
+
+  // Click the 'Admin' button in the header to navigate to login page
+  await page.click('nav >> text=Admin');
+  await expect(page).toHaveURL(/.*admin/);
+
+  // Test invalid login
+  await page.fill('#username', 'invalid');
+  await page.fill('#password', 'invalid');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await expect(page.locator('.alert')).toContainText('Invalid credentials');
+});

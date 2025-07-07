@@ -2,7 +2,7 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   use: {
-    baseURL: 'https://www.saucedemo.com/v1/',
+    baseURL: 'https://automationintesting.online/',
     headless: false, // Set to true if you want to run tests in headless mode
   },
   projects: [
