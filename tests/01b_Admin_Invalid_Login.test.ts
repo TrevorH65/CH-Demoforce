@@ -1,3 +1,6 @@
+// This test script uses Playwright to automate the login process on a demo website.
+// It tests the invalid login scenario
+
 import { test, expect } from '@playwright/test';
 
 test('Login via home page admin button with valid and invalid credentials', async ({ page }) => {

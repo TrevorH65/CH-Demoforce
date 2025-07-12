@@ -65,7 +65,7 @@ test('Admin creates and deletes a room', async ({ page }) => {
   // Assert the room number is no longer present in the admin listing table
   await expect(roomNameLocator).not.toBeVisible();
 
-   console.log('I have deleted room number: ' + roomNumber);
+console.log('I have deleted room number: ' + roomNumber);
 
 // Wait 5 seconds to allow the user to see the room is deleted
   await page.waitForTimeout(5000);
