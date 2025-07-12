@@ -16,8 +16,15 @@ test('Login via home page admin button with valid and invalid credentials', asyn
   // Verify the navbar brand is visible after login
   await expect(page.locator('a.navbar-brand')).toHaveText('Restful Booker Platform Demo');
 
-  // Click the logout button after welcome is shown (by class)
-  await page.locator('button.btn.btn-outline-danger').click();
+ 
+  // Wait for logout button to be visible, then click
+  const logoutButton = page.locator('button:has-text("Logout")');
+  await expect(logoutButton).toBeVisible();
+  await expect(logoutButton).toBeEnabled();
+  await logoutButton.click();
+
+  // Wait to allow the user to see the page shwon
+  await page.waitForTimeout(5000);
 
   // Confirm the URL is the home page after logout
   await expect(page).toHaveURL('https://automationintesting.online/');

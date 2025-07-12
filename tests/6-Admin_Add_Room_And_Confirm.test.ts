@@ -1,3 +1,6 @@
+// File: tests/6-Admin_Add_Room_And_Confirm.test.ts
+// This test adds a new room as an admin and confirms it appears in the room list
+
 import { test, expect } from '@playwright/test';
 
 test('Admin adds a new numbered room and verifies it exists', async ({ page }) => {
@@ -8,9 +11,9 @@ test('Admin adds a new numbered room and verifies it exists', async ({ page }) =
   await page.getByRole('link', { name: 'Admin panel' }).click();
 
   // Login as admin
-  await page.fill('input[name="username"]', 'admin');
-  await page.fill('input[name="password"]', 'password');
-  await page.getByRole('button', { name: 'Log in' }).click();
+  await page.fill('#username', 'admin');
+  await page.fill('#password', 'password');
+  await page.click('#doLogin');
 
   // Wait for dashboard to be visible
   await expect(page.locator('text=Rooms')).toBeVisible();

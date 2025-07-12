@@ -19,10 +19,14 @@ function toISODateString(date: Date): string {
 }
 
 test('Check availability on automationintesting.online', async ({ page }) => {
-  // Generate check-in date 14 days ahead
+  // Generate random check-in date between 30 and 365 days ahead
   const today = new Date();
+  const minDays = 30;
+  const maxDays = 365;
+  const randomOffset = Math.floor(Math.random() * (maxDays - minDays + 1)) + minDays;
+
   const checkIn = new Date(today);
-  checkIn.setDate(today.getDate() + 14);
+  checkIn.setDate(today.getDate() + randomOffset);
 
   // Generate check-out date between 1 and 7 days after check-in
   const stayLength = Math.floor(Math.random() * 7) + 1;
@@ -47,14 +51,14 @@ test('Check availability on automationintesting.online', async ({ page }) => {
   await page.locator('.dateWrapper input.form-control').nth(0).fill(checkInFormatted); // Check-in
   await page.locator('.dateWrapper input.form-control').nth(1).fill(checkOutFormatted); // Check-out
   
-    // Click the "Check Availability" button
+  // Click the "Check Availability" button
   await page.getByRole('button', { name: 'Check Availability' }).click();
 
-/// Wait for room cards to appear
-const firstRoomCard = page.locator('.room-card').first();
+  // Wait for room cards to appear
+  const firstRoomCard = page.locator('.room-card').first();
 
-// Click "Book now" link within the first room
-await firstRoomCard.locator('a.btn.btn-primary:has-text("Book now")').click();
+  // Click "Book now" link within the first room
+  await firstRoomCard.locator('a.btn.btn-primary:has-text("Book now")').click();
 
 
   // Click the "Reserve" button in the booking modal
