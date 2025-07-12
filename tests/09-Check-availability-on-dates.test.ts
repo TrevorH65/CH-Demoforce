@@ -79,4 +79,10 @@ await expect(page.locator('.booking-card')).toContainText('Booking Confirmed');
     // Wait for a few seconds to allow the confirmation message to be seen
     await page.waitForTimeout(5000);
 
+
+    // Click the "Return home" link to go back to the home page
+    await page.locator('a:has-text("Return home")').click();
+
+// From here I could add checks to ensure that the booking appears in the admin messages, etc....
+
 });
