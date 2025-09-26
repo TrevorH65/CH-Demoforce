@@ -31,19 +31,20 @@ test('Register, login, add to cart, and complete checkout', async ({ browser }) 
   await page.waitForTimeout(3000);
 
   // --- LOGIN ---
-  await page.click('#login2');
-  await page.waitForSelector('#loginusername', { timeout: 10000 });
-  await page.fill('#loginusername', username);
-  await page.fill('#loginpassword', password);
+await page.click('#login2');
+await page.waitForSelector('#loginusername');
+await page.fill('#loginusername', username);
+await page.fill('#loginpassword', password);
 
-  const loginDialog = await Promise.all([
-    page.waitForEvent('dialog'),
-    page.click('button[onclick="logIn()"]')
-  ]);
-  console.log('Login alert:', loginDialog[0].message());
-  await loginDialog[0].accept();
+// Click login
+await page.click('button[onclick="logIn()"]');
 
-  await page.waitForTimeout(3000);
+// Wait for navbar to update with Welcome message
+await page.waitForSelector(`#nameofuser`, { timeout: 10000 });
+
+// Confirm login worked
+const welcomeText = await page.textContent('#nameofuser');
+console.log('Login success message:', welcomeText);
 
   // --- ADD PRODUCT TO CART ---
   await page.click('.hrefch'); // click first product
